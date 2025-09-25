@@ -38,18 +38,6 @@ pipeline {
             }
         }
 
-        stage('DebianTest'){
-            agent{
-                docker{
-                    image 'debian:stable'
-                }
-            }
-
-            steps{
-                sh '''
-                    ping -c 5 8.8.8.8
-                '''
-            }
-        }
+        
     }
 }
