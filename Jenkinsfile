@@ -15,6 +15,7 @@ pipeline {
                     node --version
                     npm --version
                     npm ci
+                    npm fund
                     npm run build
                     ls -la
                 '''
@@ -28,11 +29,25 @@ pipeline {
                     reuseNode true
                 }
             }
-            
+
             steps{
                 sh '''
                     test -f build/index.html
                     npm test
+                '''
+            }
+        }
+
+        stage('DebianTest'){
+            agent{
+                docker{
+                    image 'debian:stable'
+                }
+            }
+
+            steps{
+                sh '''
+                    ping -c 5 8.8.8.8
                 '''
             }
         }
